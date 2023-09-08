@@ -47,3 +47,7 @@ export const calculateDifferenceInDays = (startDate: number, endDate: number) =>
     const end = moment(endDate)
     return end.diff(start, "days")
 }
+
+export const calculateTaskLeft = (task: Task) => {
+    
+}

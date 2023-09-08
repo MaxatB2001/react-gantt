@@ -5,83 +5,75 @@ export const tasks: Task[] = [
     {
         id: 1,
         title: "task1",
-        startDate: 1691269200000,
-        endDate: 1694072658009,
+        startDate: 1693602000000,
+        endDate: 1693861200000,
         userUid: "2bd34e3e-23da-4392-9dd1-f3c3ee32d9c6",
         projectUid: "2bd34e3e-23da-4392-9dd1-f3c3ee32d9s1"
     },
     {
         id: 2,
         title: "task2",
-        startDate: 1691269200000,
-        endDate: 1694072658009,
+        startDate: 1693602000000,
+        endDate: 1693861200000,
         userUid: "2bd34e3e-23da-4392-9dz2-f3c3ee32d9c6",
         projectUid: "2bd34e3e-55da-4392-9dd1-f3c3ee32d9s1"
     },
     {
         id: 3,
         title: "task3",
-        startDate: 1691269200000,
-        endDate: 1694072658009,
+        startDate: 1693947600000,
+        endDate: 1694293200000,
         userUid: "2bd34e3e-23da-4392-9dz2-f3c3ee32d2c6",
         projectUid: "2bd34e3e-66da-4392-9dd1-f3c3ee32d9s1"
     },
     {
         id: 4,
         title: "task4",
-        startDate: 1688504400000,
-        endDate: 1688677200000,
+        startDate: 1694120400000,
+        endDate: 1694638800000,
         userUid: "2bd34e3e-23da-4392-9dz2-f3c3ee32d2c6",
         projectUid: "2bd34e3e-66da-4392-9dd1-f3c3ee32d9s1"
     },
     {
         id: 5,
         title: "task5",
-        startDate: 1688504400000,
-        endDate: 1688677200000,
+        startDate: 1693947600000,
+        endDate: 1694638800000,
         userUid: "2bd34e3e-23da-4392-9dz2-f3c3ee32d2c6",
-        projectUid: "2bd34e3e-66da-4392-9dd1-f3c3ee32d9s1"
+        projectUid: "2bd34e3e-23da-4392-9dd1-f3c3ee32d9c6"
     },
     {
         id: 6,
         title: "task6",
-        startDate: 1688504400000,
-        endDate: 1688677200000,
+        startDate: 1694638800000,
+        endDate: 1695157200000,
         userUid: "2bd34e3e-23da-4392-9dz2-f3c3ee32d2c6",
         projectUid: "2bd34e3e-66da-4392-9dd1-f3c3ee32d9s1"
     },
     {
         id: 7,
         title: "task5",
-        startDate: 1679259600000,
-        endDate: 1679778000000,
-        userUid: "2bd34e3e-23da-4392-9dz2-f3c3ee32d2c6",
+        startDate: 1693602000000,
+        endDate: 1693861200000,
+        userUid: "2bd34e3e-23da-4392-9dd1-f3c3ee32d9c6",
         projectUid: "2bd34e3e-66da-4392-9dd1-f3c3ee32d9s1"
     },
     {
         id: 8,
         title: "task8",
-        startDate: 1679259600000,
-        endDate: 1679778000000,
-        userUid: "2bd34e3e-23da-4392-9dz2-f3c3ee32d2c6",
+        startDate: 1695157200000,
+        endDate: 1695675600000,
+        userUid: "2bd34e3e-23da-4392-9dd1-f3c3ee32d9c6",
         projectUid: "2bd34e3e-66da-4392-9dd1-f3c3ee32d9s1"
     },
     {
         id: 9,
         title: "task8",
-        startDate: 1679259600000,
-        endDate: 1679778000000,
-        userUid: "2bd34e3e-23da-4392-9dz2-f3c3ee32d2c6",
+        startDate: 1693947600000,
+        endDate: 1694293200000,
+        userUid: "2bd34e3e-23da-4392-9dd1-f3c3ee32d9c6",
         projectUid: "2bd34e3e-66da-4392-9dd1-f3c3ee32d9s1"
-    },
-    // {
-    //     id: 5,
-    //     title: "task5",
-    //     startDate: 1688504400000,
-    //     endDate: 1688677200000,
-    //     userUid: "2bd34e3e-23da-4392-9dz2-f3c3ee32d2c6",
-    //     projectUid: "2bd34e3e-66da-4392-9dd1-f3c3ee32d9s1"
-    // }
+    }
 ]
 
 export const projects = [

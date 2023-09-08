@@ -1,0 +1,71 @@
+.calendar-header {
+    display: flex;
+    border-bottom: 1px solid #999;
+    height: 110px;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.03);
+}
+
+.timing-toolbar-item {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: enter;
+    width: 50%;
+    height: 100%;
+    text-align: center;
+    font-size: 12px;
+}
+
+.timing-toolbar {
+    margin: 5px;
+    position: relative;
+    flex: 1;
+}
+
+.timing-toolbar::after {
+    display: block;
+    position: absolute;
+    height: 50%;
+    border-left: 1px solid #CCC;
+    width: 0;
+    content: "";
+    top: 25%;
+    left: 50%;
+}
+
+.chart-calendar {
+
+}
+
+.buttonbar {
+    height: 20px;
+}
+
+.calheader-row {
+    position: relative;
+    width: 100%;
+    border: 0;
+}
+
+.year-row-label-box {
+    display: inline-flex;
+    position: absolute;
+    top: 0;
+    height: 100% !important;
+    border-left: 1px solid #999;
+    text-align: left;
+    color: #000;
+    white-space: nowrap;
+}
+
+.calheader-label {
+    display: inline-block;
+    padding: 0 5px;
+    height: 100%;
+    max-width: 120px;
+    flex-grow: 1;
+    font-size: 14px;
+    box-sizing: border-box;
+    vertical-align: middle;
+    overflow: hidden;
+    cursor: pointer;
+}
