@@ -8,9 +8,8 @@ type TaskProps = {
 
 const GanttTask = ({ task, rowIndex }: TaskProps) => {
   const testStart = 1693515600000
-  const testEnd = 1696021200000
-  const left = calculateDifferenceInDays(testStart, task.startDate)
-  console.log(left)
+  // const testEnd = 1698267600000
+  // const left = calculateDifferenceInDays(testStart, task.startDate)
   return (
     <div
       id={task.id.toString()}
@@ -22,7 +21,7 @@ const GanttTask = ({ task, rowIndex }: TaskProps) => {
         // borderRadius: "2px",
         zIndex: 1000,
         position: "absolute",
-        left:  calculateDifferenceInDays(testStart, task.startDate) * 38 + "px",
+        left:  calculateDifferenceInDays(testStart, task.startDate) * 31 + "px",
         top: rowIndex == 0 ? 8 : 0
       }}
     >

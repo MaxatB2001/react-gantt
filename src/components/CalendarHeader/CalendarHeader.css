@@ -13,6 +13,12 @@
     height: 100%;
     text-align: center;
     font-size: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.timing-toolbar-item:hover {
+    background-color:rgba(0,0,0,.04);
 }
 
 .timing-toolbar {
@@ -32,9 +38,13 @@
     left: 50%;
 }
 
-.chart-calendar {
-
+.timing-toolbar:hover::after {
+    display: none;
 }
+
+/* .chart-calendar {
+
+} */
 
 .buttonbar {
     height: 20px;

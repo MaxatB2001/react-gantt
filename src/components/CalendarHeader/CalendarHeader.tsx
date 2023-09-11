@@ -1,6 +1,4 @@
-import moment from "moment";
-import "moment/locale/ru";
-moment.locale("ru");
+import moment from 'moment'
 import "./CalendarHeader.css";
 import { calculateDifferenceInDays } from "../../utils/helpers";
 
@@ -18,28 +16,34 @@ const CalendarHeader = (props: { startDate: number; endDate: number }) => {
   const cellWidth = Math.floor((innerWidth - 201) / differnceInDays);
 
   while (currDate.add(1, "days").diff(lastDate) < 0) {
-    console.log(currDate.week());
     dates.push(currDate.clone());
   }
 
-// const startDate = moment(props.startDate,);
-// const endDate = moment(props.endDate);
+  // const startDate = moment(props.startDate,);
+  // const endDate = moment(props.endDate);
 
-// Generate an array of dates within the ran
+  // Generate an array of dates within the ran
 
-// Extract years, months, and week numbers
-var startTime = performance.now()
-const years = [...new Set(dates.map(date => date.year()))].map(year => ({year, count: dates.filter(date => date.year() == year).length}));
-const months = [...new Set(dates.map(date => date.month() + 1))].map(month => ({month, count: dates.filter(date => date.month() == month - 1).length}));
-const weekNumbers = [...new Set(dates.map(date => date.isoWeek()))].map(wn => ({wn, count: dates.filter(date => date.isoWeek() == wn).length}));
+  // Extract years, months, and week numbers
+  var startTime = performance.now();
+  // const years = [...new Set(dates.map((date) => date.year()))].map((year) => ({
+  //   year,
+  //   count: dates.filter((date) => date.year() == year).length,
+  // }));
+  const months = [...new Set(dates.map((date) => date.month() + 1))].map(
+    (month) => ({
+      month,
+      count: dates.filter((date) => date.month() == month - 1).length,
+    })
+  );
+  const weekNumbers = [...new Set(dates.map((date) => date.isoWeek()))].map(
+    (wn) => ({ wn, count: dates.filter((date) => date.isoWeek() == wn).length })
+  );
 
-console.log('Years:', years);
-console.log('Months:', months);
-console.log('Week Numbers:', weekNumbers);
 
-var endTime = performance.now()
+  var endTime = performance.now();
 
-console.log(`Call to doSomething took ${endTime - startTime} milliseconds`)
+  console.log(`Call to doSomething took ${endTime - startTime} milliseconds`);
 
   return (
     <div className="calendar-header">
@@ -116,7 +120,7 @@ console.log(`Call to doSomething took ${endTime - startTime} milliseconds`)
           className="calheader-row"
         >
           <div className="year-row-label-box">
-            <span className="calheader-label" style={{fontWeight: 400}}>
+            <span className="calheader-label" style={{ fontWeight: 400 }}>
               2023
             </span>
           </div>
@@ -125,17 +129,78 @@ console.log(`Call to doSomething took ${endTime - startTime} milliseconds`)
           style={{ height: "33px", lineHeight: "33px" }}
           className="calheader-row"
         >
-          <div style={{width: (innerWidth - 201) / 2 }} className="year-row-label-box">
-            <span className="calheader-label" style={{fontWeight: 500, textTransform: "uppercase",}}>
-              Сентябрь
-            </span>
-          </div>
-          <div style={{width: (innerWidth - 201) / 2 , left: ( (innerWidth - 201) / 2)}} className="year-row-label-box">
-            <span className="calheader-label" style={{fontWeight: 500, textTransform: "uppercase",}}>
-              Октябрь
-            </span>
-          </div>
+          {months.map((month, i) => (
+            <div
+
+              key={i}
+              style={{
+                width: month.count * cellWidth,
+                left: i > 0 ? months[i - 1].count * cellWidth : 0,
+              }}
+              className="year-row-label-box"
+            >
+              <span
+                className="calheader-label"
+                style={{ fontWeight: 500, textTransform: "uppercase" }}
+              >
+                {moment()
+                  .month(month.month - 1)
+                  .format("MMMM")}
+              </span>
+            </div>
+          ))}
         </div>
+
+        
+        <div
+          style={{ height: "33px", lineHeight: "33px" }}
+          className="calheader-row"
+        >
+          {weekNumbers.map((wn, i) => (
+            <div
+            onClick={() => console.log(wn.count)}
+
+              key={i}
+              style={{
+                width: wn.count * cellWidth,
+                left: weekNumbers.slice(0, i).reduce((sum, a) => sum + a.count, 0) * cellWidth,
+              }}
+              className="year-row-label-box"
+            >
+              <span
+                className="calheader-label"
+                style={{ fontWeight: 500, textTransform: "uppercase" }}
+              >
+                {wn.wn}
+              </span>
+            </div>
+          ))}
+        </div>
+
+     
+        <div
+          style={{ height: "22px", lineHeight: "22px" }}
+          className="calheader-row"
+        >
+          {dates.map((d, i) => (
+            <div
+              key={i}
+              style={{
+                width: cellWidth,
+                left: i * cellWidth,
+              }}
+              className="year-row-label-box"
+            >
+              <span
+                className="calheader-label"
+                style={{ fontWeight: 500, textTransform: "uppercase" }}
+              >
+                {d.date()}
+              </span>
+            </div>
+          ))}
+        </div>
+
       </div>
     </div>
   );
