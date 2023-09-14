@@ -1,35 +1,35 @@
-import moment from 'moment'
+import moment from "moment";
 import "./CalendarHeader.css";
 import { calculateDifferenceInDays } from "../../utils/helpers";
+import { useContext } from "react";
+import { GroupContext } from "../../contexts/Tasks.context";
+import { useXarrow } from "react-xarrows";
+
 
 const CalendarHeader = (props: { startDate: number; endDate: number }) => {
+  const updateXarrow = useXarrow();
   const { innerWidth } = window;
   const currDate = moment(props.startDate).subtract(1, "day");
   const lastDate = moment(props.endDate);
   const dates: moment.Moment[] = [];
-
   const differnceInDays = calculateDifferenceInDays(
     props.startDate,
     props.endDate
   );
 
+  const groupContext = useContext(GroupContext)
   const cellWidth = Math.floor((innerWidth - 201) / differnceInDays);
-
+    console.log(cellWidth);
+    
   while (currDate.add(1, "days").diff(lastDate) < 0) {
     dates.push(currDate.clone());
   }
 
-  // const startDate = moment(props.startDate,);
-  // const endDate = moment(props.endDate);
-
-  // Generate an array of dates within the ran
-
-  // Extract years, months, and week numbers
-  var startTime = performance.now();
-  // const years = [...new Set(dates.map((date) => date.year()))].map((year) => ({
-  //   year,
-  //   count: dates.filter((date) => date.year() == year).length,
-  // }));
+  
+  const years = [...new Set(dates.map((date) => date.year()))].map((year) => ({
+    year,
+    count: dates.filter((date) => date.year() == year).length,
+  }));
   const months = [...new Set(dates.map((date) => date.month() + 1))].map(
     (month) => ({
       month,
@@ -40,10 +40,16 @@ const CalendarHeader = (props: { startDate: number; endDate: number }) => {
     (wn) => ({ wn, count: dates.filter((date) => date.isoWeek() == wn).length })
   );
 
+  const expandAllGroups = () => {
+    groupContext?.setProjects(groupContext?.projects.map(project => ({...project, isOpen: true})))
+    updateXarrow()
+  }
 
-  var endTime = performance.now();
+  const collapseAllGroups = () => {
+    groupContext?.setProjects(groupContext?.projects.map(project => ({...project, isOpen: false})))
+    updateXarrow()
+  }
 
-  console.log(`Call to doSomething took ${endTime - startTime} milliseconds`);
 
   return (
     <div className="calendar-header">
@@ -112,18 +118,32 @@ const CalendarHeader = (props: { startDate: number; endDate: number }) => {
             </div>
           </span>
         </span>
-        <div className="buttonbar"></div>
+        <div className="buttonbar">
+          <input onClick={() => expandAllGroups()} type="button"/>
+          <input onClick={() => collapseAllGroups()} type="button"/>
+        </div>
       </div>
       <div className="chart-calendar">
         <div
           style={{ height: "22px", lineHeight: "22px" }}
           className="calheader-row"
         >
-          <div className="year-row-label-box">
-            <span className="calheader-label" style={{ fontWeight: 400 }}>
-              2023
-            </span>
-          </div>
+          {years.map((year, i) => (
+            <div
+              key={year.year}
+              style={{
+                width: year.count * cellWidth,
+                left:
+                  years.slice(0, i).reduce((sum, a) => sum + a.count, 0) *
+                  cellWidth,
+              }}
+              className="year-row-label-box"
+            >
+              <span className="calheader-label" style={{ fontWeight: 400 }}>
+                {year.year}
+              </span>
+            </div>
+          ))}
         </div>
         <div
           style={{ height: "33px", lineHeight: "33px" }}
@@ -131,11 +151,12 @@ const CalendarHeader = (props: { startDate: number; endDate: number }) => {
         >
           {months.map((month, i) => (
             <div
-
               key={i}
               style={{
                 width: month.count * cellWidth,
-                left: i > 0 ? months[i - 1].count * cellWidth : 0,
+                left:
+                  months.slice(0, i).reduce((sum, a) => sum + a.count, 0) *
+                  cellWidth,
               }}
               className="year-row-label-box"
             >
@@ -151,19 +172,19 @@ const CalendarHeader = (props: { startDate: number; endDate: number }) => {
           ))}
         </div>
 
-        
         <div
           style={{ height: "33px", lineHeight: "33px" }}
           className="calheader-row"
         >
           {weekNumbers.map((wn, i) => (
             <div
-            onClick={() => console.log(wn.count)}
-
+              onClick={() => console.log(wn.count)}
               key={i}
               style={{
                 width: wn.count * cellWidth,
-                left: weekNumbers.slice(0, i).reduce((sum, a) => sum + a.count, 0) * cellWidth,
+                left:
+                  weekNumbers.slice(0, i).reduce((sum, a) => sum + a.count, 0) *
+                  cellWidth,
               }}
               className="year-row-label-box"
             >
@@ -177,7 +198,6 @@ const CalendarHeader = (props: { startDate: number; endDate: number }) => {
           ))}
         </div>
 
-     
         <div
           style={{ height: "22px", lineHeight: "22px" }}
           className="calheader-row"
@@ -200,7 +220,6 @@ const CalendarHeader = (props: { startDate: number; endDate: number }) => {
             </div>
           ))}
         </div>
-
       </div>
     </div>
   );

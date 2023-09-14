@@ -5,4 +5,7 @@ export interface Task {
     endDate: number;
     projectUid: string;
     userUid: string;
+    parentId: number | null;
+    children?: Task[]
+    isOpen?: boolean
 }

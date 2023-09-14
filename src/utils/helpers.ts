@@ -48,6 +48,39 @@ export const calculateDifferenceInDays = (startDate: number, endDate: number) =>
     return end.diff(start, "days")
 }
 
+export const buildTaskTree = (tasks: Task[]) => {
+  const tree = new Map<number, Task>()
+
+  tasks.forEach(task => {
+    const {id, parentId} = task
+    const node = {
+      ...task,
+      children: []
+    }
+
+    tree.set(id, node)
+
+    if (parentId) {
+      const parent = tree.get(parentId);
+      if (parent) {
+        if (parent?.children) {
+          parent.children.push({...node, isOpen: true});
+        } else {
+          parent.children = [node]
+        }
+      }
+    }
+  })
+
+  const roots: Task[] = []
+  tree.forEach(node => {
+    if (!node.parentId) {
+      roots.push(node)
+    }
+  })
+
+  return roots
+}
 // export const calculateTaskLeft = (task: Task) => {
     
 // }

@@ -1,29 +1,43 @@
 // import moment from "moment";
-import { resources, tasks } from "../data/mock-data";
+import { projects, resources, tasks } from "../data/mock-data";
 import { calculateDifferenceInDays, mapTasksToUser } from "../utils/helpers";
-import ResourceRow from "../components/ResourceRow";
-import Xarrow from "react-xarrows";
+import ResourceRow from "../components/ResourceRow/ResourceRow";
+import GroupRow from "../components/GroupRow/GroupRow";
+import { Fragment, useContext, useEffect } from "react";
+import { GroupContext } from "../contexts/Tasks.context";
 
 const GantChart = (props: { startDate: number; endDate: number }) => {
+
+  const groupContext = useContext(GroupContext)
   const { innerWidth } = window;
   const differnceInDays = calculateDifferenceInDays(
     props.startDate,
     props.endDate
   );
+  
+    useEffect(() => {
 
+      const usersWithTasks = mapTasksToUser(tasks, resources);
+      const projectWithUsers = projects.map((project) => {
+        const users = usersWithTasks.filter((user) =>
+          user.tasks.some((task) => task.projectUid === project.id)
+        );
+        return {
+          ...project,
+          users,
+        };
+      });
+  
+      groupContext?.setProjects(projectWithUsers);
+    }, [])
 
   const cellWidth = Math.floor((innerWidth - 201) / differnceInDays)
-  console.log(cellWidth ,"CELLL")
-  // const startDate = moment(props.startDate)
-  // const endDate = moment(props.endDate)
-    
+  console.log(cellWidth);
+  
 
   return (
     <div style={{ position: "relative" }}>
-      <Xarrow start={"2"} end={"3"} strokeWidth={2} path="grid"/>
-      {[...Array(differnceInDays)].map((x, i) => {
-        console.log(x);
-        
+      {[...Array(differnceInDays)].map((x, i) => {     
         return (
           <span
           key={i}
@@ -39,9 +53,18 @@ const GantChart = (props: { startDate: number; endDate: number }) => {
           ></span>
         )
       })}
-      {mapTasksToUser(tasks, resources).map((resource) => (
-        <ResourceRow key={resource.id} resource={resource} />
-      ))}
+     
+      {groupContext?.links}
+      {
+        groupContext?.projects.map(project => (
+          <Fragment key={project.id}>
+            <GroupRow project={project}/>
+            {project.isOpen && project.users.map((user) => 
+            <ResourceRow key={user.id} resource={user} projectId={project.id}/>
+          )}
+          </Fragment>
+        ))
+      }
     </div>
   );
 };
