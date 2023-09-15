@@ -22,7 +22,7 @@ const GanttTask = ({ task, rowIndex, projectId }: TaskProps) => {
 
   return (
     <div
-      onClick={updateXarrow}
+      onClick={() => console.log(task)}
       id={task.id.toString()}
       className={!projectId ? "" : projectId == task.projectUid ? "" : "gantt-taskbar-hidden"}
       style={{

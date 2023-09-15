@@ -8,4 +8,6 @@ export interface Task {
     parentId: number | null;
     children?: Task[]
     isOpen?: boolean
+    level?: number
+    
 }

@@ -53,9 +53,11 @@ export const buildTaskTree = (tasks: Task[]) => {
 
   tasks.forEach(task => {
     const {id, parentId} = task
-    const node = {
+    const node: Task = {
       ...task,
-      children: []
+      children: [],
+      level: 0,
+      isOpen: true
     }
 
     tree.set(id, node)
@@ -63,11 +65,14 @@ export const buildTaskTree = (tasks: Task[]) => {
     if (parentId) {
       const parent = tree.get(parentId);
       if (parent) {
+        const tempNode = {...node, level: parent.level !== undefined ? parent.level + 1 : 0}
         if (parent?.children) {
-          parent.children.push({...node, isOpen: true});
+          parent.children.push(tempNode);
+          
         } else {
-          parent.children = [node]
+          parent.children = [tempNode]
         }
+        tree.set(tempNode.id, tempNode)
       }
     }
   })
@@ -84,3 +89,25 @@ export const buildTaskTree = (tasks: Task[]) => {
 // export const calculateTaskLeft = (task: Task) => {
     
 // }
+
+export const updateObjectInTree = (tree: Task[], id: number, newData: any) => {
+   if (!tree || tree.length === 0) {
+    console.log("NO TRREE");
+    
+    return
+   }
+
+   for (let i = 0; i < tree.length; i++) {
+    const rootNode = tree[i]
+    console.log(rootNode);
+    
+    if (rootNode.id === id) {
+      Object.assign(rootNode, newData)
+      // return 
+    }
+
+    if (rootNode.children && rootNode.children.length > 0) {
+      updateObjectInTree(rootNode.children, id, newData)
+    }
+   }
+}

@@ -48,3 +48,7 @@
     cursor: pointer;
     transition: all .3s ease;
 }
+
+.group-collapsed {
+    transform: rotate(-45deg);
+}
