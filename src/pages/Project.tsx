@@ -1,22 +1,40 @@
-import { useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import TasksRow from "../components/TasksRow/TasksRow";
-import { tasks } from "../data/mock-data";
+import { projects, tasks } from "../data/mock-data";
 import {
   buildTaskTree,
   calculateDifferenceInDays,
   updateObjectInTree,
 } from "../utils/helpers";
 import { Task } from "../models/Task";
+import GroupRow from "../components/GroupRow/GroupRow";
+import { Project } from "../models/Project";
+import { GroupContext } from "../contexts/Tasks.context";
 
-const Project = (props: { startDate: number; endDate: number }) => {
+const ProjectC = (props: { startDate: number; endDate: number }) => {
   // const tree = buildTaskTree(tasks);
 
-  const [tree, setTree] = useState<Task[]>([]);
+  // const [tree, setTree] = useState<Task[]>([]);
+  // let [projectsWithTasks, setProjectsWithTasks] = useState< Project[] >([])
+  const groupContext = useContext(GroupContext)
 
   useEffect(() => {
   const start = performance.now();
-
-    setTree(buildTaskTree(tasks));
+    const tree = buildTaskTree(tasks)
+    console.log(tree, "TREE");
+    
+    const pwt = projects.map(project => {
+      const tasks = tree.filter((task) =>
+      task.projectUid === project.id
+    );
+    return {
+      ...project,
+      tasks,
+    };
+    })
+    groupContext?.setProjects(pwt);
+   
+    
     const end = performance.now();
     const elapsed = end - start;
   console.log(elapsed / 1000);
@@ -29,7 +47,7 @@ const Project = (props: { startDate: number; endDate: number }) => {
   const cellWidth = Math.floor((innerWidth - 201) / differnceInDays);
   // Calculate the elapsed time
 
-  console.log(tree);
+
   console.log(cellWidth);
 
   return (
@@ -50,11 +68,19 @@ const Project = (props: { startDate: number; endDate: number }) => {
           ></span>
         );
       })}
-      {tree.map((task) => (
-        <TasksRow key={task.id} task={task} />
+      {groupContext?.projects.map(proj => (
+        <Fragment key={proj.id}>
+          <GroupRow key={proj.id} project={proj}/>
+          {proj.isOpen && proj.tasks.map(task => (
+            <TasksRow key={task.id} task={task}/>
+          ))}
+        </Fragment>
       ))}
+      {/* {tree.map((task) => (
+        <TasksRow key={task.id} task={task} />
+      ))} */}
     </div>
   );
 };
 
-export default Project;
+export default ProjectC;

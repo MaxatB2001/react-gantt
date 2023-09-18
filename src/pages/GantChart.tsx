@@ -33,6 +33,8 @@ const GantChart = (props: { startDate: number; endDate: number }) => {
 
   const cellWidth = Math.floor((innerWidth - 201) / differnceInDays)
   console.log(cellWidth);
+  console.log(groupContext?.projects);
+  
   
 
   return (
